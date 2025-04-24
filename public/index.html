@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Online</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-entry">
+      <div class="entry-container">
+        <div class="logo">💬</div>
+        <h1>Bem-vindo ao Chat Online</h1>
+        <p>
+          Digite seu nome abaixo para entrar no chat e começar a conversar com
+          outras pessoas.
+        </p>
+
+        <div class="name-input">
+          <input
+            type="text"
+            id="username"
+            placeholder="Seu nome..."
+            autofocus
+          />
+        </div>
+
+        <button class="enter-button" id="enter-chat">Entrar no Chat</button>
+      </div>
+    </div>
+
+    <main class="page-chat">
+      <div class="sidebar">
+        <h2>Online (3)</h2>
+        <ul class="user-list">
+          <li class="user-item">
+            <span class="user-status"></span>
+            João Silva
+          </li>
+        </ul>
+      </div>
+
+      <div class="chat-container">
+        <div class="chat-header">
+          <h1>Chat Online</h1>
+        </div>
+
+        <div class="chat-messages">
+          <!-- <div class="message received">
+            <div class="message-sender">João Silva</div>
+            <div class="message-text">Olá pessoal, como vocês estão?</div>
+            <div class="message-time">10:30 AM</div>
+          </div>
+
+          <div class="message sent">
+            <p class="message-sender">Você</p>
+            <p class="message-text">Estou bem, obrigado! E você?</p>
+            <p class="message-time">10:32 AM</p>
+          </div> -->
+          <!-- <p class="user-in">Entrou na sala Fulano</p> -->
+        </div>
+
+        <div class="chat-input">
+          <div class="message-input">
+            <input
+              type="text"
+              id="message"
+              placeholder="Digite sua mensagem..."
+            />
+            <button id="send-button">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
