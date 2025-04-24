@@ -1,0 +1,16 @@
+{
+  "name": "1--websocket",
+  "version": "1.0.0",
+  "main": "index.js",
+ "scripts": {
+  "start": "node server.js",
+  "build": "mkdir -p public && cp ./index.html public/"
+},
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  }
+}
