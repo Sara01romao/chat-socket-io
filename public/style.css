@@ -88,6 +88,7 @@
   color: white;
   padding: 20px;
   overflow-y: auto;
+  position: relative;
 }
 
 .sidebar h2 {
@@ -121,6 +122,16 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+#btn-logout{
+  position: absolute;
+  bottom: 13px;
+  left: 0px;
+  right: 0px;
+  width: 90%;
+  height: 40px;
+  margin: 0 auto;
 }
 
 .chat-header {
