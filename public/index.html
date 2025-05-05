@@ -31,13 +31,15 @@
 
     <main class="page-chat">
       <div class="sidebar">
-        <h2>Online (3)</h2>
+        <h2>Online (<span id="total-users">0</span>)</h2>
         <ul class="user-list">
-          <li class="user-item">
+          <!-- <li class="user-item">
             <span class="user-status"></span>
             João Silva
-          </li>
+          </li> -->
         </ul>
+
+        <button id="btn-logout">Sair</button>
       </div>
 
       <div class="chat-container">
@@ -45,20 +47,7 @@
           <h1>Chat Online</h1>
         </div>
 
-        <div class="chat-messages">
-          <!-- <div class="message received">
-            <div class="message-sender">João Silva</div>
-            <div class="message-text">Olá pessoal, como vocês estão?</div>
-            <div class="message-time">10:30 AM</div>
-          </div>
-
-          <div class="message sent">
-            <p class="message-sender">Você</p>
-            <p class="message-text">Estou bem, obrigado! E você?</p>
-            <p class="message-time">10:32 AM</p>
-          </div> -->
-          <!-- <p class="user-in">Entrou na sala Fulano</p> -->
-        </div>
+        <div class="chat-messages"></div>
 
         <div class="chat-input">
           <div class="message-input">
