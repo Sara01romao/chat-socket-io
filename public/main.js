@@ -21,6 +21,7 @@ $(document).ready(function () {
       $(".user-list").empty();
       $(".user-list").append(data.map((item) => userItem(item)));
       $(".chat-messages").append(userIn(username));
+      $("#total-users").text(data.length);
     });
 
     socket.on("list update users", (data) => {
@@ -45,6 +46,7 @@ $(document).ready(function () {
     };
 
     socket.emit("sent, message", messageData);
+    $("#message").val("");
   });
 
   socket.on("list message add", (data) => {
@@ -56,7 +58,15 @@ $(document).ready(function () {
     console.log("mensage", data);
     $(".chat-messages").append(messageSend({ ...data, class: "received" }));
   });
+
+  $("#btn-logout").click(function(){
+    console.log("teste")
+
+    socket.emit("disconnect", username);
+  })
 });
+
+
 
 function userItem(user) {
   let li = $("<li>", { class: "user-item", text: user });

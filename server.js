@@ -22,10 +22,9 @@ io.on('connection', (socket) => {
   console.log('a user connected');
  
   socket.on("join,user", (userName)=>{
-    console.log(userName)
     connectedUsers.push(userName)
     socket.emit("list, users", connectedUsers)
-    socket.broadcast.emit("list update users", userName )
+    socket.broadcast.emit("list update users", userName)
   })
 
   socket.on('sent, message', ( message)=>{
@@ -33,6 +32,10 @@ io.on('connection', (socket) => {
     socket.emit("list message add", message);
     socket.broadcast.emit("message update", message);
   })
+
+  socket.on("disconnect", () => {
+    console.log(user + "desconectado");
+  });
 });
 
 server.listen(3000, () => {
