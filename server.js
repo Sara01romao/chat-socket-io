@@ -20,11 +20,17 @@ let messageList = []
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  // const userId = computeUserId(socket);
+  // socket.join(userId);
  
-  socket.on("join,user", (userName)=>{
-    connectedUsers.push(userName)
-    socket.emit("list, users", connectedUsers)
-    socket.broadcast.emit("list update users", userName)
+  socket.on("join user", (user)=>{
+    socket.userId =user.id;
+    socket.userName =user.name;
+    console.log(user)
+    connectedUsers.push(user)
+    socket.emit("list users", connectedUsers)
+    socket.broadcast.emit("list update user", user)
   })
 
   socket.on('sent, message', ( message)=>{
@@ -34,7 +40,16 @@ io.on('connection', (socket) => {
   })
 
   socket.on("disconnect", () => {
-    console.log(user + "desconectado");
+    console.log("aqui: ", + "desconectado", socket.userId);
+
+    console.log("antes ", connectedUsers)
+    
+    connectedUsers = connectedUsers.filter(item => item.id !== socket.userId)
+
+     console.log("agora ", connectedUsers)
+     socket.emit("list users", connectedUsers)
+     socket.broadcast.emit("list update users", connectedUsers, socket.userName );
+    // io.of("/chat.html").sockets.get(id)?.disconnect();
   });
 });
 
