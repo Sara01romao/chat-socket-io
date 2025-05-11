@@ -5,11 +5,14 @@ let pageEntry = $(".page-entry");
 let pageChat = $(".page-chat");
 
 $(document).ready(function () {
+   var id_user = ""
+
   $("#enter-chat").click(function () {
     username = $("#username").val();
+    id_user =  Math.floor(Math.random() * 1000);
 
     if (username) {
-      socket.emit("join,user", username);
+      socket.emit("join user", {id: id_user, name: username});
       $("#username").val("");
 
       $(pageEntry).css("display", "none");
@@ -17,16 +20,16 @@ $(document).ready(function () {
       document.title = "Chat (" + username + ")";
     }
 
-    socket.on("list, users", (data) => {
+    socket.on("list users", (data) => {
       $(".user-list").empty();
       $(".user-list").append(data.map((item) => userItem(item)));
-      $(".chat-messages").append(userIn(username));
+      $(".chat-messages").append(userIn(username, "connection"));
       $("#total-users").text(data.length);
     });
 
-    socket.on("list update users", (data) => {
+    socket.on("list update user", (data) => {
       $(".user-list").append(userItem(data));
-      $(".chat-messages").append(userIn(data));
+      $(".chat-messages").append(userIn(username, "connection"));
     });
   });
 
@@ -61,22 +64,35 @@ $(document).ready(function () {
 
   $("#btn-logout").click(function(){
     console.log("teste")
+    console.log("#"+id_user)
+   
+    socket.disconnect();
 
-    socket.emit("disconnect", username);
+    
+    
   })
+
+  socket.on("list update users", (data, userName) => {
+      $(".user-list").html(data.map(item => userItem(item)));
+
+      // console.log(username)
+      $(".chat-messages").append(userIn(userName, "desconnect"));
+    });
+
+
 });
 
-
-
 function userItem(user) {
-  let li = $("<li>", { class: "user-item", text: user });
+  let li = $("<li>", { id:user.id, class: "user-item", text: user.name });
   let status = $("<span>", { class: "user-status" });
   $(li).prepend(status);
   return li;
 }
 
-function userIn(user) {
-  let p = $("<p>", { class: "user-in", text: user + " entrou na sala" });
+function userIn(user, status) {
+  console.log(status)
+  let statusMsg = status === "connection" ? " entrou no chat" : "saiu do chat";
+  let p = $("<p>", { class: "user-in", text: user + statusMsg});
   return $(p);
 }
 
