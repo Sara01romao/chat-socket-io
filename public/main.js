@@ -20,16 +20,16 @@ $(document).ready(function () {
       document.title = "Chat (" + username + ")";
     }
 
-    socket.on("list users", (data) => {
+    socket.on("list users", (data, user) => {
       $(".user-list").empty();
       $(".user-list").append(data.map((item) => userItem(item)));
-      $(".chat-messages").append(userIn(username, "connection"));
+      $(".chat-messages").append(userIn(user.name, "connection"));
       $("#total-users").text(data.length);
     });
 
     socket.on("list update user", (data) => {
       $(".user-list").append(userItem(data));
-      $(".chat-messages").append(userIn(username, "connection"));
+      $(".chat-messages").append(userIn(data.name, "connection"));
     });
   });
 
@@ -67,8 +67,6 @@ $(document).ready(function () {
     console.log("#"+id_user)
    
     socket.disconnect();
-
-    
     
   })
 
@@ -90,8 +88,8 @@ function userItem(user) {
 }
 
 function userIn(user, status) {
-  console.log(status)
-  let statusMsg = status === "connection" ? " entrou no chat" : "saiu do chat";
+  console.log(status, user)
+  let statusMsg = status === "connection" ? " entrou no chat " : " saiu do chat ";
   let p = $("<p>", { class: "user-in", text: user + statusMsg});
   return $(p);
 }
