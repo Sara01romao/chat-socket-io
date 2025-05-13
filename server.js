@@ -18,8 +18,7 @@ let connectedUsers = [];
 let messageList = [];
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-
+  
   socket.on("join user", (user) => {
     socket.userId = user.id;
     socket.userName = user.name;
@@ -36,13 +35,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("aqui: ", +"desconectado", socket.userId);
-
     connectedUsers = connectedUsers.filter((item) => item.id !== socket.userId);
-
     socket.emit("list users", connectedUsers);
     socket.broadcast.emit("list update users", connectedUsers, socket.userName);
-    // io.of("/chat.html").sockets.get(id)?.disconnect();
   });
 });
 
