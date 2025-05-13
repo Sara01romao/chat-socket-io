@@ -5,14 +5,14 @@ let pageEntry = $(".page-entry");
 let pageChat = $(".page-chat");
 
 $(document).ready(function () {
-   var id_user = ""
+  var id_user = "";
 
   $("#enter-chat").click(function () {
     username = $("#username").val();
-    id_user =  Math.floor(Math.random() * 1000);
+    id_user = Math.floor(Math.random() * 1000);
 
     if (username) {
-      socket.emit("join user", {id: id_user, name: username});
+      socket.emit("join user", { id: id_user, name: username });
       $("#username").val("");
 
       $(pageEntry).css("display", "none");
@@ -62,35 +62,29 @@ $(document).ready(function () {
     $(".chat-messages").append(messageSend({ ...data, class: "received" }));
   });
 
-  $("#btn-logout").click(function(){
-    console.log("teste")
-    console.log("#"+id_user)
-   
+  $("#btn-logout").click(function () {
     socket.disconnect();
-    
-  })
+    window.location = "/index.html";
+  });
 
   socket.on("list update users", (data, userName) => {
-      $(".user-list").html(data.map(item => userItem(item)));
+    $(".user-list").html(data.map((item) => userItem(item)));
 
-      // console.log(username)
-      $(".chat-messages").append(userIn(userName, "desconnect"));
-    });
-
-
+    $(".chat-messages").append(userIn(userName, "desconnect"));
+  });
 });
 
 function userItem(user) {
-  let li = $("<li>", { id:user.id, class: "user-item", text: user.name });
+  let li = $("<li>", { id: user.id, class: "user-item", text: user.name });
   let status = $("<span>", { class: "user-status" });
   $(li).prepend(status);
   return li;
 }
 
 function userIn(user, status) {
-  console.log(status, user)
-  let statusMsg = status === "connection" ? " entrou no chat " : " saiu do chat ";
-  let p = $("<p>", { class: "user-in", text: user + statusMsg});
+  let statusMsg =
+    status === "connection" ? " entrou no chat " : " saiu do chat ";
+  let p = $("<p>", { class: "user-in", text: user + statusMsg });
   return $(p);
 }
 
