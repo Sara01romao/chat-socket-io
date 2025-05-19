@@ -6,25 +6,25 @@
 }
 
 .page-entry {
-  background-color: #3498db;
+  background-color: #252529;
   height: 100vh;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .entry-container {
-  background-color: white;
+  background-color: #222227;
   padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 5px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 400px;
   text-align: center;
 }
 
 .entry-container h1 {
-  color: #2c3e50;
+  color: #fff;
   margin-bottom: 30px;
   font-size: 28px;
 }
@@ -48,13 +48,20 @@
   transition: border-color 0.3s;
 }
 
+p.error-msg{
+  margin: 0px;
+  text-align: justify;
+  color: #e17575;
+  display: none;
+}
+
 .name-input input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #34c081;
 }
 
 .enter-button {
-  background-color: #3498db;
+  background-color: #1d7f53;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -63,10 +70,12 @@
   cursor: pointer;
   width: 100%;
   transition: background-color 0.3s;
+  margin-top: 30px;
 }
 
 .enter-button:hover {
-  background-color: #2980b9;
+  transition: background-color 0.3s;
+  background-color: #155f3e;
 }
 
 .logo {
@@ -76,23 +85,19 @@
 }
 /***************/
 
-.chat-header {
-  background-color: #0E0D11;
-  padding: 15px 20px;
- 
-}
-
 .page-chat {
   height: 100vh;
-  /* background-color: #f5f5f5; */
-  background-color: #0E0D11;
+  background-color: #0e0d11;
+  display: none;
 }
 
+.chat-header {
+  background-color: #0e0d11;
+  padding: 15px 40px;
+}
 
-.chat{
+.chat {
   display: flex;
-  /* border: 1px solid red; */
-  /* padding: 10px; */
 }
 
 .sidebar {
@@ -111,6 +116,8 @@
   margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 1px solid #34495e;
+  font-weight: normal;
+  font-size: 18px;
 }
 
 .user-list {
@@ -140,21 +147,50 @@
   flex: 1;
 }
 
-#btn-logout{
+#btn-logout {
   position: absolute;
+  background: #358e66;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
   bottom: 13px;
   left: 0px;
   right: 0px;
   width: 90%;
   height: 40px;
-  margin: 0 auto;
+  margin: 0 auto 15px;
+  cursor: pointer;
+  max-width: 200px;
+  font-size: 16px;
+  transition: 0.8s;
 }
 
 .chat-messages {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #0E0D11;
+  background-color: #0e0d11;
+  max-height: calc(100vh - 173px);
+  border-bottom: 1px solid #272727;
+  margin-bottom: 10px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 10px;
+  background-color: #e3e0d6;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background-color: #282828;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: #2c7555;
+  border-radius: 3px;
 }
 
 .message {
@@ -166,13 +202,14 @@
 }
 
 .received {
-  background-color: white;
+  background-color: #343541;
+  color: #fff;
   align-self: flex-start;
   border-bottom-left-radius: 5px;
 }
 
 .sent {
-  background-color: #3498db;
+  background-color: #1e2836;
   color: white;
   align-self: flex-end;
   border-bottom-right-radius: 5px;
@@ -185,9 +222,14 @@
   font-size: 0.8em;
 }
 
+.message-text {
+  font-size: 18px;
+  margin-top: 12px;
+}
+
 .user-in {
   margin: 5px 0px;
-  color: gray;
+  color: #fff;
   font-style: italic;
 }
 
@@ -203,7 +245,6 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  /* border:1px solid #3393f3; */
   width: 90%;
   margin: 0 auto 10px;
   border-radius: 10px;
@@ -218,31 +259,41 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  margin-bottom: 5px;
 }
 
 .message-input {
   display: flex;
+  gap: 10px;
 }
 
 .message-input input {
   flex: 1;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px 0 0 4px;
-  border-right: none;
-  background-color: #121214;
-
+  border: none;
+  border-radius: 8px;
+  background-color: #222227;
+  color: #fff;
+  font-size: 16px;
+  padding-left: 16px;
 }
 
 .message-input button {
   padding: 10px 15px;
-  background-color: #3498db;
+  background-color: #358e66;
   color: white;
   border: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-content: center;
+  gap: 10px;
+  font-size: 16px;
+  transition: 0.8s;
 }
 
-.message-input button:hover {
-  background-color: #2980b9;
+.message-input button:hover,
+#btn-logout:hover {
+  transition: 0.8s;
+  background-color: #155f3e;
 }
