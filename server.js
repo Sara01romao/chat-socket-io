@@ -15,29 +15,28 @@ app.get("/", (req, res) => {
 const io = socketIO(server);
 
 let connectedUsers = [];
-let messageList = [];
 
 io.on("connection", (socket) => {
-  
   socket.on("join user", (user) => {
     socket.userId = user.id;
     socket.userName = user.name;
 
     connectedUsers.push(user);
     socket.emit("list users", connectedUsers, user);
-    socket.broadcast.emit("list update user", user);
+    socket.broadcast.emit("list update user", user, connectedUsers.length);
   });
 
   socket.on("sent, message", (message) => {
-    messageList.push(message);
     socket.emit("list message add", message);
     socket.broadcast.emit("message update", message);
   });
 
   socket.on("disconnect", () => {
-    connectedUsers = connectedUsers.filter((item) => item.id !== socket.userId);
-    socket.emit("list users", connectedUsers);
-    socket.broadcast.emit("list update users", connectedUsers, socket.userName);
+    if(socket.userId){
+      connectedUsers = connectedUsers.filter((item) => item.id !== socket.userId);
+      socket.emit("list users", connectedUsers);
+      socket.broadcast.emit("list update users", connectedUsers, socket.userName);
+    }
   });
 });
 
