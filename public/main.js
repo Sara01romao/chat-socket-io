@@ -11,13 +11,19 @@ $(document).ready(function () {
     username = $("#username").val();
     id_user = Math.floor(Math.random() * 1000);
 
+    if(username === ""){
+      $(".error-msg").css("display", "block");
+      return;
+    }
+
     if (username) {
+      $(".error-msg").css("display", "none");
       socket.emit("join user", { id: id_user, name: username });
       $("#username").val("");
 
       $(pageEntry).css("display", "none");
-      $(pageChat).css("display", "flex");
-      document.title = "Chat (" + username + ")";
+      $(pageChat).css("display", "block");
+      document.title = "ChatON (" + username + ")";
     }
 
     socket.on("list users", (data, user) => {
@@ -27,38 +33,50 @@ $(document).ready(function () {
       $("#total-users").text(data.length);
     });
 
-    socket.on("list update user", (data) => {
+    socket.on("list update user", (data, userTotal) => {
       $(".user-list").append(userItem(data));
       $(".chat-messages").append(userIn(data.name, "connection"));
+      $("#total-users").text(userTotal);
     });
   });
 
-  $("#send-button").click(function () {
+   function mensageSend(){
     let message = $("#message").val();
-    let time = new Date();
-    let timeMessage = time.toLocaleString("pt-BR", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
 
-    const messageData = {
-      message: message,
-      time: timeMessage,
-      sender: username,
-    };
+    if (message !== "") {
+      let time = new Date();
+      let timeMessage = time.toLocaleString("pt-BR", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
 
-    socket.emit("sent, message", messageData);
-    $("#message").val("");
+      const messageData = {
+        message: message,
+        time: timeMessage,
+        sender: username,
+      };
+
+      socket.emit("sent, message", messageData);
+      $("#message").val("");
+    }
+  }
+  
+  $('#message').on('keydown', function (e) {
+    if (e.keyCode === 13) {
+      mensageSend()
+    }
+  })
+
+  $("#send-button").click(function () {
+    mensageSend()
   });
 
   socket.on("list message add", (data) => {
-    console.log({ ...data, class: "sent" });
     $(".chat-messages").append(messageSend({ ...data, class: "sent" }));
   });
 
   socket.on("message update", (data) => {
-    console.log("mensage", data);
     $(".chat-messages").append(messageSend({ ...data, class: "received" }));
   });
 
@@ -69,8 +87,8 @@ $(document).ready(function () {
 
   socket.on("list update users", (data, userName) => {
     $(".user-list").html(data.map((item) => userItem(item)));
-
     $(".chat-messages").append(userIn(userName, "desconnect"));
+    $("#total-users").text(data.length);
   });
 });
 
@@ -92,7 +110,7 @@ function messageSend(message) {
   let div = $("<div>", { class: "message" + " " + message.class });
   let sender = $("<p>", {
     class: "message-sender",
-    text: message.sender === username ? "Voce" : message.sender,
+    text: message.sender === username ? "Você" : message.sender,
   });
   let text = $("<p>", { class: "message-text", text: message.message });
   let time = $("<p>", { class: "message-time", text: message.time });
